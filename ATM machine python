@@ -1,0 +1,69 @@
+# ATM Machine in Python
+
+class ATM:
+    def __init__(self, pin, balance=0):
+        self.pin = pin
+        self.balance = balance
+        self.is_logged_in = False
+    
+    def authenticate(self):
+        entered_pin = input("Enter PIN: ")
+        if entered_pin == self.pin:
+            self.is_logged_in = True
+            print("PIN correct! You are now logged in.")
+        else:
+            print("Incorrect PIN. Access denied.")
+    
+    def check_balance(self):
+        print(f"Your current balance is: ${self.balance}")
+    
+    def deposit(self):
+        amount = float(input("Enter amount to deposit: $"))
+        self.balance += amount
+        print(f"${amount} deposited successfully.")
+    
+    def withdraw(self):
+        amount = float(input("Enter amount to withdraw: $"))
+        if amount > self.balance:
+            print("Insufficient funds.")
+        else:
+            self.balance -= amount
+            print(f"${amount} withdrawn successfully.")
+    
+    def logout(self):
+        self.is_logged_in = False
+        print("You have logged out.")
+    
+    def show_menu(self):
+        while self.is_logged_in:
+            print("\n--- ATM Menu ---")
+            print("1. Check Balance")
+            print("2. Deposit")
+            print("3. Withdraw")
+            print("4. Logout")
+            
+            choice = input("Select an option: ")
+
+            if choice == '1':
+                self.check_balance()
+            elif choice == '2':
+                self.deposit()
+            elif choice == '3':
+                self.withdraw()
+            elif choice == '4':
+                self.logout()
+            else:
+                print("Invalid choice. Please try again.")
+
+# Main program
+def main():
+    print("Welcome to the ATM")
+    atm = ATM(pin="1234", balance=1000)  # Initialize ATM with a PIN and an initial balance
+
+    atm.authenticate()
+
+    if atm.is_logged_in:
+        atm.show_menu()
+
+if __name__ == "__main__":
+    main()
